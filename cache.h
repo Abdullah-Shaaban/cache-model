@@ -1,6 +1,8 @@
 #ifndef CACHE_H
 #define CACHE_H
 
+#include <cstdint>
+
 // Definitions
 #define BYTE_OFFSET 2
 // Types for Main Memory callback functions
@@ -11,7 +13,7 @@ typedef void (*write_main_mem_callback_t) (uint32_t addr, int data);
 // Cache entry structure
 struct cache_entry
 {
-    // - TAG - 11 bits
+    // - TAG
     uint32_t tag;
     // - DIRTY flag – 1 bit. Indicates if the data has been changed and needs to be written back to memory.
     bool dirty;

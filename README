@@ -1,0 +1,37 @@
+# Direct-Mapped Cache with Write-Back Policy
+This C++ implementation provides a simple, direct-mapped data cache with a write-back policy. The cache operates on 32-bit cache lines, and main memory access is facilitated through blocking read and write callback functions. All memory accesses are assumed to be at a 32-bit word granularity
+
+### Cache Structure
+The cache consists of a set of cache lines, each comprising the following components:
+- Tag: Identifies the data's location in main memory.
+- Dirty Flag (1 bit): Indicates if the data has been modified and needs to be written back to memory.
+- Valid Flag (1 bit): Signifies whether the cache row is valid or unused.
+- Data Block: A 32-bit word containing the data in the cache row.
+
+### Template Parameters
+The cache class templated using:
+- num_cache_lines: The number of lines in the cache.
+- num_addr_bits: The number of bits in the address (to specify address space).
+
+### Class Methods
+- Constructor
+The cache constructor initializes all entries as invalid and not dirty.
+
+- Read Cache (read_cache)
+This method reads a 32-bit data from the cache. If the data is not present in the cache (cache miss), it issues a request to main memory. The cache employs a write-back policy, updating main memory only when necessary.
+
+- Write Cache (write_cache)
+This method writes data to the cache. If the data is already present (cache hit), it updates the cache and sets the dirty flag. In the case of a cache miss, it allocates a new cache line, potentially evicts an existing entry, and updates the cache and main memory.
+
+- Extract Index (extract_indx)
+Given a 32-bit address, this method extracts the index bits by applying a mask and discarding the byte offset.
+
+- Extract Tag (extract_tag)
+Given a 32-bit address, this method extracts the tag bits by applying a mask and discarding the index and byte offset.
+
+- Reconstruct Address (reconstruct_addr)
+Given a tag and index, this method constructs a 30-bit address (no byte offset) suitable for main memory access.
+
+- Assign Main Memory Callbacks (assign_main_mem_callbacks)
+This method allows the assignment of read and write callback functions for main memory access.
+
